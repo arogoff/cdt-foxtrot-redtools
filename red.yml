@@ -1,9 +1,15 @@
 ---
 - name: Deploy Persistent Netcat Listeners
-  hosts: [linux]
+  hosts: blueteamlin
   become: yes
 
   tasks:
+    - name: Install netcat on Ubuntu
+      apt:
+        name: netcat-openbsd
+        state: present
+        update_cache: yes
+
     - name: Copy the Netcat script
       copy:
         src: listeners.sh
